@@ -1,23 +1,24 @@
-package com.jans.auto.rotation.locked
+package com.jans.auto.rotation.locked.adapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.jans.auto.rotation.locked.R
+import com.jans.auto.rotation.locked.activities.SampleScreen2
 
 class AdapterAutoRotationItems(private val rootItemList: List<String>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var contextRootAdapter: Context
-
-
+    lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.root_item_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.my_rv_layout, parent, false)
         return AutoRotationViewHolder(view)
     }
 
@@ -27,19 +28,18 @@ class AdapterAutoRotationItems(private val rootItemList: List<String>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = rootItemList[position]
-        contextRootAdapter = holder.itemView.context
+        context = holder.itemView.context
 
 
         when (holder) {
             is AutoRotationViewHolder -> {
-
                 val tv1 = holder.itemView.findViewById(R.id.rootTitleTextView) as TextView
                 tv1.text = item
 
                 holder.rootTextViewBox.setOnClickListener {
-                    Toast.makeText(holder.itemView.context, item, Toast.LENGTH_SHORT).show()
-                }
+                    context.startActivity(Intent(context, SampleScreen2::class.java))
 
+                }
             }
         }
     }

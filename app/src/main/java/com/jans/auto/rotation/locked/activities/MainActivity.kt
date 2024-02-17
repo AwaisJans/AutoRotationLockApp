@@ -1,14 +1,12 @@
-package com.jans.auto.rotation.locked
+package com.jans.auto.rotation.locked.activities
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jans.auto.rotation.locked.R
+import com.jans.auto.rotation.locked.adapters.AdapterAutoRotationItems
+import com.jans.auto.rotation.locked.utils.ConfigApp
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,35 +14,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rv1: RecyclerView
     private lateinit var items: List<String>
 
-
-    private fun isTablet(): Boolean {
-        val xlarge =
-            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK === 4
-        val large =
-            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK === Configuration.SCREENLAYOUT_SIZE_LARGE
-        return xlarge || large
-    }
-
-
-    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
-        if(isTablet()){
-            Toast.makeText(this, "Tablet", Toast.LENGTH_SHORT).show()
-        }
-        else{
-            Toast.makeText(this, "not a tablet", Toast.LENGTH_SHORT).show()
-            // Lock Orientation
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
-
+        ConfigApp.isTablet(this)
 
         rv1 = findViewById(R.id.recyclerView)
-
 
         items = listOf("ahmadjahanamanimransagarsohailharoonahmadjahanamanimransagarsohailharoon",
             "jahanahmadjahanamanimransagarsohailharooahmadjahanamanimransagarsohailharoonn",
@@ -86,15 +62,11 @@ class MainActivity : AppCompatActivity() {
             "sohailahmadjahanamanimraahmadjahanamanimransagarsohailharoonnsagarsohailharoon",
             "haroonahmadjahaahmadjahanamanimransagarsohailharoonnamanimransagarsohailharoon")
 
-
-
         rv1.layoutManager = GridLayoutManager(this,3)
         val adapter = AdapterAutoRotationItems(items)
         rv1.adapter = adapter
 
-
     }
-
 
 
 }
